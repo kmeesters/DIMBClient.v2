@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'LOGIN_TITLE' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form (submit)="doLogin()">
+    <ion-list>
+      <ion-item>
+        <ion-label fixed>Team</ion-label>
+        <ion-select [(ngModel)]="team.idTeam" interface="popover" [ngModelOptions]="{standalone: true}">
+          <ion-option *ngFor="let team of teams" [value]=team.idTeam>
+            {{team.TeamName}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+     <ion-item>
+        <ion-label fixed>Code</ion-label>
+        <ion-input type="password" [(ngModel)]="team.TeamCode" name="code"></ion-input>
+      </ion-item>
+
+      <div padding>
+        <button ion-button color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>
