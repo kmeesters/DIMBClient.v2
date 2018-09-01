@@ -77,3 +77,8 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+//for qrscanner
+ion-app.cameraView, ion-app.cameraView ion-content, ion-app.cameraView .nav-decor {
+  background: transparent none !important;
+}
