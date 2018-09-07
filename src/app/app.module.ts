@@ -9,9 +9,11 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Items } from '../mocks/providers/items';
-import { Settings, User, Api } from '../providers';
+import { Settings, User, Api, ObjectProvider } from '../providers';
 import { QRScanner } from '@ionic-native/qr-scanner';
 import { MyApp } from './app.component';
+
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -27,10 +29,7 @@ export function provideSettings(storage: Storage) {
    * these values will not overwrite the saved values (this can be done manually if desired).
    */
   return new Settings(storage, {
-    option1: true,
-    option2: 'Ionitron J. Framework',
-    option3: '3',
-    option4: 'Hello'
+    server: 'http://dimbv1.disaster-exercise.com/api'
   });
 }
 
@@ -49,7 +48,7 @@ export function provideSettings(storage: Storage) {
       }
     }),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -59,6 +58,7 @@ export function provideSettings(storage: Storage) {
     Api,
     Items,
     User,
+    ObjectProvider,
     Camera,
     SplashScreen,
     StatusBar,

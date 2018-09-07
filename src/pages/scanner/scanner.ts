@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
-
+import { ObjectProvider } from '../../providers';
 
 /**
  * Generated class for the ScannerPage page.
@@ -19,12 +19,19 @@ export class ScannerPage {
   private isBackMode: boolean = true;
   private isFlashLightOn: boolean = false;
   private scanSub: any;
+
+  objectcode: { qrcode: string} = {
+    qrcode: ''
+  }
+  type: any;
+  
   
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public viewController: ViewController,
     public QRScanner: QRScanner,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    public objectPrv: ObjectProvider) {
 }
 
   ionViewWillEnter(){
@@ -38,7 +45,8 @@ export class ScannerPage {
 
           // start scanning
           this.scanSub = this.QRScanner.scan().subscribe((text: string) => {
-            this.presentToast(text);
+            //this.presentToast(text);
+            this.objectcode.qrcode =  text;
           });
 
           // show camera preview
@@ -56,6 +64,27 @@ export class ScannerPage {
         }
       })
       .catch((e: any) => console.log('Error is', e));
+  }
+
+  submitCode() {
+    this.objectPrv.gettype(this.objectcode)
+      .subscribe((resp) => {
+      //if found
+      console.log(resp);
+      //capitizalize the first letter for navigation page
+      var targetPage = resp[0]['type'].charAt(0).toUpperCase() + resp[0]['type'].slice(1);
+      this.navCtrl.push(targetPage+'DetailPage', {
+          item: this.objectcode
+        });
+    }, (err) => {
+      //if error
+      let toast = this.toastCtrl.create({
+        message: "Code is not valid",
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+    });
   }
 
   closeModal() {

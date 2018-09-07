@@ -56,7 +56,7 @@ export class LoginPage {
     this.user.getTeams()
       .then(data => {
         this.teams = data;
-        console.log(data);
+        //console.log(data);
       })
   }
 }

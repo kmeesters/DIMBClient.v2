@@ -1,18 +1,48 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>{{ item.name }}</ion-title>
+    <ion-title>{{item?.ItemTypeName}} ({{ item?.ItemName }})</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content>
-  <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'">
-  </div>
+  <div class="item-bg"></div>
+  <div class="splash-info">
+      <div class="splash-logo"></div>
 
-  <div class="item-detail" padding>
-    <h2>{{item.name}}</h2>
-    <p>{{item.about}}</p>
-  </div>
+      <ion-card>
+        <ion-card-header>
+          <h1>{{item?.ItemTypeName}}</h1>
+        </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+            <ion-item>
+                <ion-icon name="timer" item-start></ion-icon>
+                Status
+                <ion-badge color="secondary" item-end><countdown-timer [end]="item?.ItemExpiration"></countdown-timer></ion-badge>
+            </ion-item>
+
+
+          <ion-item>
+            <ion-icon name="logo-dropbox" item-start></ion-icon>
+            Remaining capacity
+            <ion-badge color="secondary" item-end>{{item?.remain}}</ion-badge>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="information-circle" item-start></ion-icon>
+            Status
+            <ion-badge color="secondary" item-end>{{item?.ItemStatus}}</ion-badge>
+          </ion-item>
+        </ion-list>
+
+      </ion-card-content>
+    </ion-card>
+
+      <div padding>
+        <button (click)="applyitem()" ion-button block color="secondary">
+          <ion-icon name="checkmark-circle" style="padding-right: 4px;"></ion-icon><label>Apply item to victim</label>
+        </button>
+      </div>
+    </div>
 </ion-content>
+

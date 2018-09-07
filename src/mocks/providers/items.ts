@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Item } from '../../models/item';
+import { Api } from '../../providers/api/api';
 
 @Injectable()
 export class Items {
@@ -13,7 +14,7 @@ export class Items {
   };
 
 
-  constructor() {
+  constructor(public api: Api) {
     let items = [
       {
         "name": "Burt Bear",
@@ -82,4 +83,16 @@ export class Items {
   delete(item: Item) {
     this.items.splice(this.items.indexOf(item), 1);
   }
+
+  
+  getitem(qrcode: any) {
+    let seq = this.api.get('item', qrcode).share();
+    seq.subscribe(data => {
+      return data;
+    }, err => {
+      console.error('ERROR', err);
+    });
+    return seq;
+  }
+
 }
